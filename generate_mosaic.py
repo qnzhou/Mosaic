@@ -2,6 +2,7 @@
 
 """
 Create a random mosaic from a directory of images.
+Author: Qingnan Zhou
 """
 
 import argparse
@@ -20,6 +21,8 @@ def parse_args():
             help="output image height in pixels");
     parser.add_argument("--mask", default=None, type=str,
             help="Masking image");
+    parser.add_argument("--preferred-list", default=None, type=str,
+            help="Preferred list of images that should be larger.");
     parser.add_argument("image_dir", help="A directory of images");
     parser.add_argument("output_img", help="output image name");
     return parser.parse_args();
@@ -38,16 +41,37 @@ def main():
     count = 0;
     max_num_tries = 100;
     scales = [1.0, 0.5, 0.5] + [0.25] * 4;
+
+    preferred = [];
+    if args.preferred_list is not None:
+        with open(args.preferred_list, 'r') as fin:
+            for f in fin:
+                preferred.append(os.path.join(args.image_dir,
+                    "{}.png".format(f.strip())));
+    preferred = np.unique(preferred).tolist();
+
+    files = [];
     for fi,f in enumerate(os.listdir(args.image_dir)):
         name, ext = os.path.splitext(f);
         if ext != ".png" and ext != ".jpg": continue;
+        if name in preferred: continue;
         f = os.path.join(args.image_dir, f);
+        files.append(f);
+
+    files = preferred + numpy.random.permutation(files).tolist();
+    num_preferred = len(preferred);
+
+    for fi, f in enumerate(files):
+        #f = os.path.join(args.image_dir, f);
         img = Image.open(f);
+        is_preferred = fi < num_preferred;
 
         success = False;
         for i in range(max_num_tries):
             x,y = numpy.random.random(2);
             scale = numpy.random.choice(scales);
+            if is_preferred:
+                scale = min(1.0, scale * 2);
             w = int(img.width*scale);
             h = int(img.height*scale);
             resized_img = img.resize((w, h));
