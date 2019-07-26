@@ -52,7 +52,7 @@ def main():
             for f in fin:
                 preferred.append(os.path.join(args.image_dir,
                     "{}.png".format(f.strip())));
-    preferred = np.unique(preferred).tolist();
+    preferred = numpy.random.permutation(np.unique(preferred)).tolist();
 
     files = [];
     for fi,f in enumerate(os.listdir(args.image_dir)):
@@ -63,6 +63,7 @@ def main():
         f = os.path.join(args.image_dir, f);
         files.append(f);
 
+    files = [x for x in files if x not in preferred];
     files = preferred + numpy.random.permutation(files).tolist();
     num_preferred = len(preferred);
     image_map = {};
@@ -80,7 +81,7 @@ def main():
                 scale = min(1.0, scale * 2);
             w = int(img.width*scale);
             h = int(img.height*scale);
-            resized_img = img.resize((w, h), PIL.Image.ANTIALIAS);
+            resized_img = img.resize((w, h), resample=PIL.Image.LANCZOS);
 
             cx = int(canvas.width * x);
             cy = int(canvas.height * y);
