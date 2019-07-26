@@ -6,6 +6,7 @@ Author: Qingnan Zhou
 """
 
 import argparse
+import json
 from PIL import Image
 import PIL.ImageOps
 import numpy as np
@@ -29,6 +30,9 @@ def parse_args():
 
 def main():
     args = parse_args();
+    out_name = os.path.splitext(args.output_img)[0];
+    Image.MAX_IMAGE_PIXELS = max(Image.MAX_IMAGE_PIXELS,
+            args.image_width * args.image_height + 1);
     canvas = Image.new("RGBA", (args.image_width, args.image_height),
             (0, 0, 0, 0));
     if args.mask is not None:
@@ -36,11 +40,11 @@ def main():
         canvas = canvas.resize((mask.width, mask.height));
         mask = mask.convert('1');
     else:
-        mask = canvas.split()[-1]#.convert('1');
+        mask = canvas.split()[-1].convert('I');
 
     count = 0;
     max_num_tries = 100;
-    scales = [1.0, 0.5, 0.5] + [0.25] * 4;
+    scales = [0.5, 0.5] + [0.25] * 4 + [0.15] * 8;
 
     preferred = [];
     if args.preferred_list is not None:
@@ -54,16 +58,18 @@ def main():
     for fi,f in enumerate(os.listdir(args.image_dir)):
         name, ext = os.path.splitext(f);
         if ext != ".png" and ext != ".jpg": continue;
-        if name in preferred: continue;
+        if "{}.png".format(os.path.join(args.image_dir, name)) in preferred:
+            continue;
         f = os.path.join(args.image_dir, f);
         files.append(f);
 
     files = preferred + numpy.random.permutation(files).tolist();
     num_preferred = len(preferred);
+    image_map = {};
 
     for fi, f in enumerate(files):
         #f = os.path.join(args.image_dir, f);
-        img = Image.open(f);
+        img = Image.open(f).convert('RGBA');
         is_preferred = fi < num_preferred;
 
         success = False;
@@ -74,7 +80,7 @@ def main():
                 scale = min(1.0, scale * 2);
             w = int(img.width*scale);
             h = int(img.height*scale);
-            resized_img = img.resize((w, h));
+            resized_img = img.resize((w, h), PIL.Image.ANTIALIAS);
 
             cx = int(canvas.width * x);
             cy = int(canvas.height * y);
@@ -106,9 +112,11 @@ def main():
                 continue;
 
             canvas.paste(resized_img, box, img_mask);
-            mask.paste(img_mask, box, img_mask);
-            mask.save("test.png");
+
+            solid_image = Image.fromarray(np.ones((h,w), dtype=int) * (fi+1), "I");
+            mask.paste(solid_image, box, img_mask);
             success = True;
+            image_map[fi+1] = f;
             break;
 
         if success:
@@ -116,15 +124,21 @@ def main():
             if count % 100 == 0:
                 print("{} images are packed so far!".format(count));
                 canvas.save(args.output_img);
+                mask.save("{}_mask.png".format(out_name));
+                with open("{}_index.txt".format(out_name), 'w') as fout:
+                    json.dump(image_map, fout, indent=4);
         if count < fi * 0.5:
             print("Packing stopped since not enough empty space is left.");
             min_scale = scales[-1];
-            if min_scale < 0.1:
+            if min_scale < 0.1 * scales[0]:
                 break;
             scales += [min_scale * 0.5 ] * int(1.0 / min_scale)
 
     print("A total of {} images are packed!".format(count));
     canvas.save(args.output_img);
+    mask.save("{}_mask.png".format(out_name));
+    with open("{}_index.txt".format(out_name), 'w') as fout:
+        json.dump(image_map, fout, indent=4);
 
 if __name__ == "__main__":
     main();
