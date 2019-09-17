@@ -12,6 +12,7 @@ The following python packages are needed:
 * argparse
 * PIL
 * numpy
+* json
 
 Inputs:
 -------
@@ -39,16 +40,18 @@ Examples:
 
 The following examples are generated with this script:
 
-Thingi10K:
+[Thingi10K](https://ten-thousand-models.appspot.com):
 ![Thingi10K Poster](https://user-images.githubusercontent.com/3606672/65047743-fa269180-d930-11e9-8013-134764b150c1.png)
 
-TetWild:
+[TetWild](https://github.com/Yixin-Hu/TetWild):
 ![TetWild](https://user-images.githubusercontent.com/3606672/65047949-55f11a80-d931-11e9-809a-298af17c66ba.png)
+
+Computer Graphics Forum (Volume 37 Issue 1) [Cover image](https://onlinelibrary.wiley.com/doi/10.1111/cgf.13328)
 
 If you have used Mosaic to generate a figure, please let me know and I can include your example here.
 
 Author:
 -------
 
-Qingnan Zhou
+Qingnan Zhou<br>
 Adobe Systems
