@@ -37,10 +37,15 @@ the images.
 Examples:
 ---------
 
-The following public images are generated with this script.
+The following examples are generated with this script:
 
-* Thingi10K:
-* CGF Cover:
+Thingi10K:
+![Thingi10K Poster](https://user-images.githubusercontent.com/3606672/65047743-fa269180-d930-11e9-8013-134764b150c1.png)
+
+TetWild:
+![TetWild](https://user-images.githubusercontent.com/3606672/65047949-55f11a80-d931-11e9-809a-298af17c66ba.png)
+
+If you have used Mosaic to generate a figure, please let me know and I can include your example here.
 
 Author:
 -------
