@@ -43,8 +43,14 @@ The following examples are generated with this script:
 [Thingi10K](https://ten-thousand-models.appspot.com):
 ![Thingi10K Poster](https://user-images.githubusercontent.com/3606672/65047743-fa269180-d930-11e9-8013-134764b150c1.png)
 
-[TetWild](https://github.com/Yixin-Hu/TetWild):
+[Tetrahedral Meshing in the Wild](https://github.com/Yixin-Hu/TetWild) (Siggraph 2018):
 ![TetWild](https://user-images.githubusercontent.com/3606672/65047949-55f11a80-d931-11e9-809a-298af17c66ba.png)
+
+[Decoupling Simulation Accuracy from Mesh Quality](https://dl.acm.org/citation.cfm?id=3275067) (Siggragh Asia 2018)
+![Decouple](https://user-images.githubusercontent.com/3606672/65056270-94410680-d93e-11e9-9465-632dec11d598.png)
+
+[Poly-Spline Finite Element Method](https://dl.acm.org/citation.cfm?id=3313797) (ToG 2019)
+![polyfem](https://user-images.githubusercontent.com/3606672/65056678-4d9fdc00-d93f-11e9-8579-64aec46730dd.png)
 
 Computer Graphics Forum (Volume 37 Issue 1) [Cover image](https://onlinelibrary.wiley.com/doi/10.1111/cgf.13328)
 
