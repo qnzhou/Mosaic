@@ -52,7 +52,7 @@ The following examples are generated with this script:
 [Poly-Spline Finite Element Method](https://dl.acm.org/citation.cfm?id=3313797) (ToG 2019)
 ![polyfem](https://user-images.githubusercontent.com/3606672/65056678-4d9fdc00-d93f-11e9-8579-64aec46730dd.png)
 
-[LayerCode](http://www.cs.columbia.edu/cg/layercode/) (Siggraph 2019)
+[LayerCode: Optical Barcodes for 3D Printed Shapes](http://www.cs.columbia.edu/cg/layercode/) (Siggraph 2019)
 ![layercode](https://user-images.githubusercontent.com/3606672/65273057-48cd5a80-daee-11e9-87b8-5f21dce8e4e5.png)
 
 Computer Graphics Forum (Volume 37 Issue 1) [Cover image](https://onlinelibrary.wiley.com/doi/10.1111/cgf.13328)
